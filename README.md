@@ -2,7 +2,7 @@
 A tiny port of Ack.vim
 
 ## Installation
-Installation via [vim-plug](https://github.com/junegunn/vim-plug):
+Installation via [junegunn/vim-plug](https://github.com/junegunn/vim-plug):
 
 ```vim
 Plug 'alanjcfs/rg.nvim'
@@ -10,7 +10,7 @@ Plug 'alanjcfs/rg.nvim'
 
 ## How to Use
 
-With ripgrep installed, you can use
+With [BurntSushi/ripgrep](https://github.com/BurntSushi/ripgrep) installed, you can use
 
 ```
 :Rg "def show"
