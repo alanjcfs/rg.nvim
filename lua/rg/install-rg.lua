@@ -30,6 +30,6 @@ local install = function()
   return true
 end
 
-Rg = {
+return {
   install = install
 }
