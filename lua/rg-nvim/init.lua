@@ -1,6 +1,6 @@
 InstallRg = require('install-rg')
 
-Ack = function (opts)
+Rg = function (opts)
   local is_installed = InstallRg()
   if is_installed == false then return false end
 
@@ -23,4 +23,4 @@ Ack = function (opts)
   end
 end
 
-vim.api.nvim_create_user_command('Ack', Ack, { nargs = '*' })
+vim.api.nvim_create_user_command('Rg', Rg, { nargs = '*' })
