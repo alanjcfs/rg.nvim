@@ -1,6 +1,5 @@
 -- NOTE: Need to do a first check for install instead of every time
--- require'install-rg'.install()
--- if is_installed == false then return false end
+local install = require'rg/install-rg'
 
 local setup = function ()
   local Rg = function (opts)
@@ -27,6 +26,7 @@ local setup = function ()
   vim.api.nvim_create_user_command('Rg', Rg, { nargs = '*' })
 end
 
-Rg = {
-  setup = setup
+return {
+  setup = setup,
+  install = install
 }
