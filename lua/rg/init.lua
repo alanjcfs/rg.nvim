@@ -1,9 +1,8 @@
-InstallRg = require('install-rg')
+-- NOTE: Need to do a first check for install instead of every time
+-- require'install-rg'.install()
+-- if is_installed == false then return false end
 
 local rg = function (opts)
-  local is_installed = InstallRg()
-  if is_installed == false then return false end
-
   if opts.fargs[2] == nil then
     opts.fargs[2] = './'
   end

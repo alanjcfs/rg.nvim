@@ -1,4 +1,4 @@
-function InstallRg()
+local install = function()
   if vim.fn.executable('rg') == 1 then
     if vim.fn.executable('brew') == 0 then
       local answer, install, yeses = nil, false, {"y", "yes"}
@@ -29,3 +29,7 @@ function InstallRg()
   -- ripgrep is install, so just move on
   return true
 end
+
+Rg = {
+  install = install
+}
