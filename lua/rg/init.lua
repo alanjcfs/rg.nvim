@@ -1,19 +1,16 @@
--- NOTE: Need to do a first check for install instead of every time
+-- NOT: Need to do a first check for install instead of every time
 local install = require'rg/install-rg'
 
 local setup = function ()
   local Rg = function (opts)
-    if opts.fargs[2] == nil then
-      opts.fargs[2] = './'
-    end
-
     if vim.g.rgprg == nil then
       vim.g.rgprg = "rg --vimgrep --smartcase"
     end
 
-    local str_query = vim.fn.shellescape(opts.fargs[1])
-    local dir = vim.fn.shellescape(opts.fargs[2])
-    local cmd = string.format("cgetexpr system('%s %s %s')", vim.g.rgprg, str_query, dir)
+    local interpolated_string = string.format("cgetexpr system('%s')", opts.args)
+    local escaped_string = vim.fn.shellescape(interpolated_string)
+
+    print(escaped_string)
     vim.cmd(cmd)
     vim.cmd("copen")
 
