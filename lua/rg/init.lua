@@ -2,16 +2,14 @@
 local install = require'rg/install-rg'
 
 local setup = function ()
-  local Rg = function (opts)
-    if vim.g.rgprg == nil then
-      vim.g.rgprg = "rg --vimgrep --smartcase"
-    end
+  if vim.g.rgprg == nil then
+    vim.g.rgprg = "rg --vimgrep --smart-case"
+  end
 
-    local interpolated_string = string.format("cgetexpr system('%s')", opts.args)
-    local escaped_string = vim.fn.shellescape(interpolated_string)
+  function Rg(args)
+    local interpolated_string = string.format("cgetexpr system('%s %s')", vim.g.rgprg, args)
 
-    print(escaped_string)
-    vim.cmd(cmd)
+    vim.cmd(interpolated_string)
     vim.cmd("copen")
 
     if vim.o.buftype == "quickfix" then
@@ -20,7 +18,8 @@ local setup = function ()
   end
 
 
-  vim.api.nvim_create_user_command('Rg', Rg, { nargs = '*' })
+  -- vim.api.nvim_create_user_command('Rg', Rg, {})
+  vim.api.nvim_command("command! -nargs=* Rg call luaeval('Rg(_A)', expand('<args>'))")
 end
 
 return {
