@@ -19,7 +19,7 @@ local setup = function ()
 
 
   -- vim.api.nvim_create_user_command('Rg', Rg, {})
-  vim.api.nvim_command("command! -nargs=* Rg call luaeval('Rg(_A)', expand('<args>'))")
+  vim.api.nvim_exec("command! -nargs=* Rg call luaeval('Rg(_A)', expand('<args>'))", true)
 end
 
 return {
