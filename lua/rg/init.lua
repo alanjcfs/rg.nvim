@@ -1,6 +1,3 @@
--- NOT: Need to do a first check for install instead of every time
-local install = require'rg/install-rg'
-
 local setup = function ()
   if vim.g.rgprg == nil then
     vim.g.rgprg = "rg --vimgrep --smart-cape"
@@ -31,5 +28,4 @@ end
 
 return {
   setup = setup,
-  install = install
 }
