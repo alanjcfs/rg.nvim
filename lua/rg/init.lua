@@ -3,7 +3,14 @@ local install = require'rg/install-rg'
 
 local setup = function ()
   if vim.g.rgprg == nil then
-    vim.g.rgprg = "rg --vimgrep --smart-case"
+    vim.g.rgprg = "rg --vimgrep --smart-cape"
+  end
+
+  if vim.g.rg_command_name == nil then
+    vim.g.rg_command_name = "Rg"
+  else
+    -- Capitalize the command.
+    vim.g.rg_command_name = str:gsub("^%l", string.upper)
   end
 
   function Rg(args)
@@ -19,7 +26,7 @@ local setup = function ()
 
 
   -- vim.api.nvim_create_user_command('Rg', Rg, {})
-  vim.api.nvim_exec("command! -nargs=* Rg call luaeval('Rg(_A)', expand('<args>'))", true)
+  vim.api.nvim_exec("command! -nargs=* " .. vim.g.rg_command_name .. "call luaeval('Rg(_A)', expand('<args>'))", true)
 end
 
 return {
