@@ -7,7 +7,7 @@ local setup = function ()
     vim.g.rg_command_name = "Rg"
   else
     -- Capitalize the command.
-    vim.g.rg_command_name = str:gsub("^%l", string.upper)
+    vim.g.rg_command_name = vim.g.rg_command_name:gsub("^%l", string.upper)
   end
 
   function Rg(args)
