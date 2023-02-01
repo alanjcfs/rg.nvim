@@ -18,7 +18,7 @@ local setup = function ()
     vim.cmd("copen")
 
     if vim.o.buftype == "quickfix" then
-      -- vim.cmd("nnoremap gq :cclose<CR>")
+      vim.cmd("nnoremap <buffer> gq :cclose<CR>")
       -- vim.keymap.set("n", "<CR>", "@:exe ':set switchbuf=useopen'<CR><CR>")
       -- vim.keymap.set("n", "o", "@:exe ':set switchbuf=useopen'<CR><CR>")
       -- vim.keymap.set("n", "O", "@:exe ':set switchbuf=useopen'<CR>':cclose'<CR><CR>")
