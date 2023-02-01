@@ -1,6 +1,6 @@
 local setup = function ()
   if vim.g.rgprg == nil then
-    vim.g.rgprg = "rg --vimgrep --smart-case"
+    vim.g.rgprg = "rg --vimgrep --smart-case --column"
   end
 
   if vim.g.rg_command_name == nil then
@@ -11,7 +11,7 @@ local setup = function ()
   end
 
   function Rg(args)
-    local interpolated_string = string.format("cgetexpr system('%s %s')", vim.g.rgprg, args)
+    local interpolated_string = string.format("cgetexpr system('%s %s')", vim.g.rgprg, vim.fn.shellescape(vim.fn.expand(args)))
 
     vim.cmd(interpolated_string)
     vim.cmd("copen")
@@ -23,7 +23,7 @@ local setup = function ()
 
 
   -- vim.api.nvim_create_user_command('Rg', Rg, {})
-  vim.api.nvim_exec("command! -nargs=* " .. vim.g.rg_command_name .. " call luaeval('Rg(_A)', expand('<args>'))", true)
+  vim.api.nvim_exec("command! -nargs=* " .. vim.g.rg_command_name .. " call luaeval(\'Rg(_A)\', '<args>')", true)
 end
 
 return {
