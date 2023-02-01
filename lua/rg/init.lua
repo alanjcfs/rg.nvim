@@ -18,6 +18,15 @@ local setup = function ()
 
     if vim.o.buftype == "quickfix" then
       vim.cmd("nnoremap gq :cclose<CR>")
+      vim.keymap.set("n", "<CR>", ":exe ':set switchbuf=useopen'<CR><CR>")
+      vim.keymap.set("n", "o", ":exe ':set switchbuf=useopen'<CR><CR>")
+      vim.keymap.set("n", "O", ":exe ':set switchbuf=useopen'<CR>':cclose'<CR><CR>")
+      vim.keymap.set("n", "go", ":exe ':set switchbuf=useopen'<CR>':normal <c-w>p'<CR>")
+      vim.keymap.set("n", "t", ":exe ':set switchbuf=newtab'<CR><CR>")
+      vim.keymap.set("n", "T", ":exe ':set switchbuf=split'<CR>':normal :tp'<CR><CR>")
+      vim.keymap.set("n", "h", ":exe ':set switchbuf=split'<CR><CR>")
+      vim.keymap.set("n", "H", ":exe ':set switchbuf=split'<CR>':normal <C-W>p'<CR>")
+      vim.keymap.set("n", "v", ":exe ':set switchbuf=vsplit'<CR><CR>")
     end
   end
 
