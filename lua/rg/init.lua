@@ -13,7 +13,7 @@ local setup = function ()
   function Rg(args)
     local interpolated_string = string.format("cgetexpr system(%s)", vim.fn.shellescape(vim.g.rgprg .. " " .. vim.fn.expand(args)))
 
-    print(interpolated_string)
+    -- print(interpolated_string)
     vim.cmd(interpolated_string)
     vim.cmd("copen")
 
