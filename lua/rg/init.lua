@@ -11,7 +11,7 @@ local setup = function ()
   end
 
   function Rg(args)
-    local interpolated_string = string.format("cgetexpr system(%s)", vim.fn.shellescape(vim.g.rgprg .. " " .. vim.fn.expand(args)))
+    local interpolated_string = string.format("cgetexpr system(" .. vim.g.rgprg .. " %s)", vim.fn.shellescape(vim.fn.expand(args)))
 
     -- print(interpolated_string)
     vim.cmd(interpolated_string)
@@ -19,15 +19,16 @@ local setup = function ()
 
     if vim.o.buftype == "quickfix" then
       vim.cmd("nnoremap <buffer> gq :cclose<CR>")
+      vim.keymap.set("n", "o", ":exe 'normal :set switchbuf=useopen'<cr><cr>")
       -- vim.keymap.set("n", "<CR>", "@:exe ':set switchbuf=useopen'<CR><CR>")
       -- vim.keymap.set("n", "o", "@:exe ':set switchbuf=useopen'<CR><CR>")
       -- vim.keymap.set("n", "O", "@:exe ':set switchbuf=useopen'<CR>':cclose'<CR><CR>")
       -- vim.keymap.set("n", "go", "@:exe ':set switchbuf=useopen'<CR>':normal <c-w>p'<CR>")
-      -- vim.keymap.set("n", "t", "@:exe ':set switchbuf=newtab'<CR><CR>")
+      vim.keymap.set("n", "t", "@:exe ':set switchbuf=newtab'<CR><CR>")
       -- vim.keymap.set("n", "T", "@:exe ':set switchbuf=split'<CR>':normal :tp'<CR><CR>")
-      -- vim.keymap.set("n", "h", "@:exe ':set switchbuf=split'<CR><CR>")
+      vim.keymap.set("n", "h", "@:exe ':set switchbuf=split'<CR><CR>")
       -- vim.keymap.set("n", "H", "@:exe ':set switchbuf=split'<CR>':normal <C-W>p'<CR>")
-      -- vim.keymap.set("n", "v", "@:exe ':set switchbuf=vsplit'<CR><CR>")
+      vim.keymap.set("n", "v", "@:exe ':set switchbuf=vsplit'<CR><CR>")
     end
   end
 
