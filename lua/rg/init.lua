@@ -19,7 +19,7 @@ local setup = function ()
 
     if vim.o.buftype == "quickfix" then
       vim.cmd("nnoremap <buffer> gq :cclose<CR>")
-      vim.keymap.set("n", "o", ":exe 'normal :setlswitchbuf=useopen'<cr><cr>")
+      vim.keymap.set("n", "o", ":exe 'normal :setl switchbuf=useopen'<cr><cr>")
       -- vim.keymap.set("n", "<CR>", "@:exe ':set switchbuf=useopen'<CR><CR>")
       -- vim.keymap.set("n", "o", "@:exe ':set switchbuf=useopen'<CR><CR>")
       -- vim.keymap.set("n", "O", "@:exe ':set switchbuf=useopen'<CR>':cclose'<CR><CR>")
