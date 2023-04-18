@@ -11,7 +11,7 @@ local setup = function ()
   end
 
   function Rg(args)
-    local interpolated_string = string.format("cgetexpr system(g:rgprg .. shellescape(expand(%s)))", args)
+    local interpolated_string = string.format("cgetexpr system(g:rgprg .. ' ' .. shellescape(expand(%s)))", args)
 
     -- print(interpolated_string)
     vim.cmd(interpolated_string)
