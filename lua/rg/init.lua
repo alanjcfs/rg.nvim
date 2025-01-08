@@ -19,6 +19,8 @@ local setup = function ()
 
     if vim.o.buftype == "quickfix" then
       vim.cmd("nnoremap <buffer> gq :cclose<CR>")
+      vim.cmd.augroup("rgnvim")
+      vim.cmd.autocmd("autocmd BufReadPost quickfix nnoremap t normal :setl switchbuf=newtab<cr><cr>")
       -- vim.keymap.set("n", "o", ":exe 'normal :setl switchbuf=useopen'<cr><cr>")
       -- vim.keymap.set("n", "<CR>", "@:exe ':set switchbuf=useopen'<CR><CR>")
       -- vim.keymap.set("n", "o", "@:exe ':set switchbuf=useopen'<CR><CR>")
@@ -34,7 +36,11 @@ local setup = function ()
 
 
   -- vim.api.nvim_create_user_command('Rg', Rg, {})
-  vim.api.nvim_exec("command! -nargs=* " .. vim.g.rg_command_name .. " call luaeval(\'Rg(_A)\', '<args>')", true)
+  vim.api.nvim_cmd({
+    vim.api.nvim_parse_cmd("command! -nargs=* " .. vim.g.rg_command_name .. " call luaeval(\'Rg(_A)\' , '<args>')",
+    {})
+  }, { true })
+
 end
 
 return {
