@@ -11,6 +11,10 @@ local setup = function ()
   end
 
   local function Rg(opts)
+    if opts.args == '' then
+      vim.notify('Ripgrep: no search term provided', vim.log.levels.WARN)
+      return
+    end
     local results = vim.fn.systemlist(vim.g.rgprg .. ' ' .. vim.fn.shellescape(opts.args))
     vim.fn.setqflist({}, 'r', { lines = results, title = 'rg: ' .. opts.args })
     vim.cmd('copen')
