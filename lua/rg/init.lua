@@ -10,33 +10,33 @@ local setup = function ()
     vim.g.rg_command_name = vim.g.rg_command_name:gsub("^%l", string.upper)
   end
 
-  function Rg(args)
-    local interpolated_string = string.format("cgetexpr system(g:rgprg .. ' ' .. shellescape(expand('%s')))", args)
-
-    -- print(interpolated_string)
-    vim.cmd(interpolated_string)
-    vim.cmd("copen")
-
-    if vim.o.buftype == "quickfix" then
-      vim.cmd("nnoremap <buffer> gq :cclose<CR>")
-      vim.cmd.augroup("rgnvim")
-      -- vim.cmd.autocmd("autocmd BufReadPost quickfix nnoremap t normal :setl switchbuf=newtab<cr><cr>")
-      -- vim.keymap.set("n", "o", ":exe 'normal :setl switchbuf=useopen'<cr><cr>")
-      -- vim.keymap.set("n", "<CR>", "@:exe ':set switchbuf=useopen'<CR><CR>")
-      -- vim.keymap.set("n", "o", "@:exe ':set switchbuf=useopen'<CR><CR>")
-      -- vim.keymap.set("n", "O", "@:exe ':set switchbuf=useopen'<CR>':cclose'<CR><CR>")
-      -- vim.keymap.set("n", "go", "@:exe ':set switchbuf=useopen'<CR>':normal <c-w>p'<CR>")
-      -- vim.keymap.set("n", "t", "@:exe ':setl switchbuf=newtab'<CR><CR>")
-      -- vim.keymap.set("n", "T", "@:exe ':set switchbuf=split'<CR>':normal :tp'<CR><CR>")
-      -- vim.keymap.set("n", "h", "@:exe ':setl switchbuf=split'<CR><CR>")
-      -- vim.keymap.set("n", "H", "@:exe ':set switchbuf=split'<CR>':normal <C-W>p'<CR>")
-      -- vim.keymap.set("n", "v", "@:exe ':setl switchbuf=vsplit'<CR><CR>")
-    end
+  local function Rg(opts)
+    local results = vim.fn.systemlist(vim.g.rgprg .. ' ' .. vim.fn.shellescape(opts.args))
+    vim.fn.setqflist({}, 'r', { lines = results, title = 'rg: ' .. opts.args })
+    vim.cmd('copen')
   end
 
+  vim.api.nvim_create_user_command(vim.g.rg_command_name, Rg, { nargs = '*' })
 
-  -- vim.api.nvim_create_user_command('Rg', Rg, {})
-  vim.api.nvim_exec2("command! -nargs=* " .. vim.g.rg_command_name .. " call luaeval(\'Rg(_A)\' , '<args>')", { output = true })
+  vim.api.nvim_create_autocmd('FileType', {
+    pattern = 'qf',
+    group = vim.api.nvim_create_augroup('rgnvim', { clear = true }),
+    callback = function()
+      local map_opts = { buffer = true, noremap = true, silent = true }
+      vim.keymap.set('n', 'o',    '<CR>',                               map_opts)
+      vim.keymap.set('n', '<CR>', '<CR>',                               map_opts)
+      vim.keymap.set('n', 'O',    '<CR>:cclose<CR>',                    map_opts)
+      vim.keymap.set('n', 'go',   '<CR><C-W>p',                         map_opts)
+      vim.keymap.set('n', 't',    '<C-W><CR><C-W>T',                    map_opts)
+      vim.keymap.set('n', 'T',    '<C-W><CR><C-W>TgT<C-W>j',           map_opts)
+      vim.keymap.set('n', 'h',    '<C-W><CR><C-W>K',                    map_opts)
+      vim.keymap.set('n', 'H',    '<C-W><CR><C-W>K<C-W>b',              map_opts)
+      vim.keymap.set('n', 'v',    '<C-W><CR><C-W>H<C-W>b<C-W>J<C-W>t', map_opts)
+      vim.keymap.set('n', 'gv',   '<C-W><CR><C-W>H<C-W>b<C-W>J<C-W>p', map_opts)
+      vim.keymap.set('n', 'q',    ':cclose<CR>',                        map_opts)
+      vim.keymap.set('n', 'gq',   ':cclose<CR>',                        map_opts)
+    end
+  })
 end
 
 return {
