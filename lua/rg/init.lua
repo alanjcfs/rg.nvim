@@ -33,7 +33,7 @@ local setup = function ()
     end
 
     local results = vim.fn.systemlist(vim.g.rgprg .. ' ' .. vim.fn.shellescape(pattern) .. path_arg)
-    vim.fn.setqflist({}, 'r', { lines = results, title = 'rg: ' .. opts.args })
+    vim.fn.setqflist({}, 'r', { lines = results, efm = '%f:%l:%c:%m', title = 'rg: ' .. opts.args })
     vim.cmd('copen')
   end
 
