@@ -15,12 +15,29 @@ local setup = function ()
       vim.notify('Ripgrep: no search term provided', vim.log.levels.WARN)
       return
     end
-    local results = vim.fn.systemlist(vim.g.rgprg .. ' ' .. vim.fn.shellescape(opts.args))
+
+    local pattern = opts.args
+    local path_arg = ''
+
+    -- If the last word is an existing directory, use it as the search path
+    local last_word = opts.args:match('%S+$')
+    if last_word then
+      local expanded = vim.fn.expand(last_word)
+      if vim.fn.isdirectory(expanded) == 1 then
+        local prefix = opts.args:sub(1, #opts.args - #last_word):gsub('%s+$', '')
+        if prefix ~= '' then
+          pattern = prefix
+          path_arg = ' ' .. vim.fn.shellescape(expanded)
+        end
+      end
+    end
+
+    local results = vim.fn.systemlist(vim.g.rgprg .. ' ' .. vim.fn.shellescape(pattern) .. path_arg)
     vim.fn.setqflist({}, 'r', { lines = results, title = 'rg: ' .. opts.args })
     vim.cmd('copen')
   end
 
-  vim.api.nvim_create_user_command(vim.g.rg_command_name, Rg, { nargs = '*' })
+  vim.api.nvim_create_user_command(vim.g.rg_command_name, Rg, { nargs = '*', complete = 'file' })
 
   vim.api.nvim_create_autocmd('FileType', {
     pattern = 'qf',
